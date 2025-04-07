@@ -74,14 +74,14 @@ plot(Xs, 0, 'rdiamond');
 
 L = 100; % Lunghezza asintoti (arbitraria)
 alpha = -pi;
-theta = pi / n_m;
+theta = pi / abs(n_m);
 if(mod(n_m, 2) == 0)
     isPos = true;
 else
     isPos = false;
 end
 
-for i = 0:2 * n_m
+for i = 0:2 * abs(n_m)
     alpha = alpha + theta;
     x1 = Xs + L * cos(alpha);
     y1 = L * sin(alpha);
