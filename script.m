@@ -1,17 +1,17 @@
 % --- Aquisizione dati e creazione della funzione di trasferimento ---
-MODE = input('Scegli come inserire la fdT: (0 = N/D; 1 = F(s), -1 = esempio)');
+MODE = input('Scegli come inserire la fdT: (0 = coeffs(N) / coeffs(D); 1 = N(s) / D(s), -1 = esempio)');
 if(isa(MODE, "numeric"))
     if(MODE == -1)
-        fprintf('N/D: \nInserisci i coefficienti del numeratore: \n[1 5 6] \nInserisci i coefficienti del denominatore: \n[1 3 3 0] \n\n')
-        fprintf('F(s): \nInserisci la funzione di trasferimento:\n(5*s + 1)/((s + 10)*(s + 1))');
+        fprintf('--- 0: \nInserisci i coefficienti del numeratore: \n[1 5 6] \nInserisci i coefficienti del denominatore: \n[1 3 3 0] \n\n')
+        fprintf('--- 1: \nInserisci N(s): \n5*s + 1 \nInserisci D(s): \n(s + 10)*(s + 1) \n\n');
         return
     elseif(MODE == 0)
         N = input('Inserisci i coefficienti del numeratore: ');
         D = input('Inserisci i coefficienti del denominatore: ');
-        G = tf(N, D);
     elseif(MODE == 1)
-        s = tf('s');
-        G = input('Inserisci la funzione di trasferimento: ');
+        syms s;
+        N = sym2poly(input('Inserisci N(s): '));
+        D = sym2poly(input('Inserisci D(s): '));
     else
         fprintf('Mode [%d] is not implemented.\n', MODE);
         return
@@ -20,9 +20,16 @@ else
     fprintf('Specified value is not an integer.\n');
     return
 end
+G = tf(N, D);
 display(G);
 
-% --- Calcolo di zeri, poli, margini e molteplicita' ---
+% --- Calcolo di guadagni, zeri, poli, margini e molteplicita' ---
+if(D(numel(D)) == 0)
+    K = N(numel(N)) / D(numel(D) - 1);
+else
+    K = N(numel(N)) / D(numel(D));
+end
+Kp = N(1) / D(1);
 Z = zero(G);
 P = pole(G);
 [Gm, Pm, Wcg, Wcp] = margin(G);
@@ -80,6 +87,9 @@ if(mod(n_m, 2) == 0)
 else
     isPos = false;
 end
+if(Kp < 0)
+    isPos = ~isPos;
+end
 
 for i = 0:2 * abs(n_m)
     alpha = alpha + theta;
@@ -101,6 +111,11 @@ end
 hold off;
 
 % --- Stampa dei risultati ---
+fprintf('\n--- Guadagni a ciclo aperto ---\n');
+fprintf('K = %.2f\n', K);
+fprintf('KdB = %.2f\n', mag2db(K));
+fprintf('Kp = %.2f\n', Kp);
+
 fprintf('\n--- Riposta Armonica ---\n');
 fprintf('%cc = %.2f\n', 969, Wcg);
 fprintf('%ct = %.2f\n', 969, Wcp);
