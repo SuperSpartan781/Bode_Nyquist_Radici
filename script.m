@@ -33,13 +33,6 @@ Kp = N(1) / D(1);
 Z = zero(G);
 P = pole(G);
 [Gm, Pm, Wcg, Wcp] = margin(G);
-Kpc = 1;
-for i = 1:numel(P)
-    Kpc = Kpc * sqrt(P(i)^2 + Wcg^2);
-end
-for i = 1:numel(Z)
-    Kpc = Kpc / sqrt(Z(i)^2 + Wcg^2);
-end
 n_m = numel(P) - numel(Z);
 
 % --- Calcolo di baricentro e punti doppi ---
@@ -111,16 +104,13 @@ end
 hold off;
 
 % --- Stampa dei risultati ---
-fprintf('\n--- Guadagni a ciclo aperto ---\n');
-fprintf('K = %.2f\n', K);
-fprintf('KdB = %.2f\n', mag2db(K));
+fprintf('\n--- Guadagni ---\n');
+fprintf('K = %.2fdB = %.2f\n', mag2db(K), K);
 fprintf('Kp = %.2f\n', Kp);
 
-fprintf('\n--- Riposta Armonica ---\n');
-fprintf('%cc = %.2f\n', 969, Wcg);
-fprintf('%ct = %.2f\n', 969, Wcp);
-fprintf('Kc = %.2f\n', Gm);
-fprintf('Kpc = %.2f\n', Kpc);
+fprintf('\n--- Margini ---\n');
+fprintf('mg = %.2fdB = %.2f [@ %cc = %.2frad/s]\n', mag2db(Gm), Gm, 969, Wcg);
+fprintf('m%c = %.2f° [@ %ct = %.2frad/s]\n', 966, Pm, 969, Wcp);
 
 fprintf('\n--- Luogo delle Radici ---\n');
 fprintf('n-m = %d\n', n_m);
@@ -128,7 +118,7 @@ fprintf('Xs = %.2f\n', Xs);
 fprintf('Punti doppi: [');
 for i = 1:numel(P_doppi)
     if(isreal(P_doppi(i)))
-        fprintf(' %.2f ', P_doppi(i));
+        fprintf(' Xd%d = %.2f ', i, P_doppi(i));
     end
 end
 fprintf(']\n');
