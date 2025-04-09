@@ -59,7 +59,7 @@ grid on;
 title('Diagramma di Nyquist');
 
 hold on
-plot(1/Gm, 0, 'ro');
+plot(-1/Gm, 0, 'ro');
 hold off
 
 % --- Luogo delle radici ---
