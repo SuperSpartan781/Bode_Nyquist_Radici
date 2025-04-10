@@ -5,9 +5,10 @@ Questo script MATLAB consente di analizzare un sistema lineare tempo-invariante 
 ## Funzionalità Principali
 
 - Inserimento della funzione di trasferimento in tre modalità:
+  - `-1`: Visualizzazione di un **esempio predefinito**
   - `0`: Inserimento tramite **coefficienti del numeratore e denominatore**
   - `1`: Inserimento tramite **espressioni simboliche N(s) / D(s)**
-  - `-1`: Visualizzazione di un **esempio predefinito**
+  - `2`: Generazione random **[WIP]**
 - Calcolo automatico di:
   - Poli e zeri del sistema
   - Guadagno di Bode `K` (con valore in dB) e guadagno di Evans `Kp`
