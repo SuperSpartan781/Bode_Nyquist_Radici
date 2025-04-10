@@ -1,5 +1,6 @@
 % --- Aquisizione dati e creazione della funzione di trasferimento ---
-MODE = input('Scegli come inserire la fdT: (0 = coeffs(N) / coeffs(D); 1 = N(s) / D(s), -1 = esempio)');
+fprintf('-1 = esempio; \n0 = coeffs(N) / coeffs(D); \n1 = N(s) / D(s); \n2 = random; \n');
+MODE = input('Scegli come inserire la fdT: \n');
 if(isa(MODE, "numeric"))
     if(MODE == -1)
         fprintf('--- 0: \nInserisci i coefficienti del numeratore: \n[1 5 6] \nInserisci i coefficienti del denominatore: \n[1 3 3 0] \n\n')
@@ -12,6 +13,9 @@ if(isa(MODE, "numeric"))
         syms s;
         N = sym2poly(input('Inserisci N(s): '));
         D = sym2poly(input('Inserisci D(s): '));
+    elseif(MODE == 2)
+        N = randi([0 5], 1, randi([0 3]));
+        D = randi([0 5], 1, randi([0 3]));
     else
         fprintf('Mode [%d] is not implemented.\n', MODE);
         return
