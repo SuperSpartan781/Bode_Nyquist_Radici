@@ -1,5 +1,5 @@
 % --- Aquisizione dati e creazione della funzione di trasferimento ---
-fprintf('-1 = esempio; \n0 = coeffs(N) / coeffs(D); \n1 = N(s) / D(s); \n2 = random; \n');
+fprintf('-1 = esempio; \n0 = coeffs(N) / coeffs(D); \n1 = N(s) / D(s); \n2 = random [WIP]; \n');
 MODE = input('Scegli come inserire la fdT: \n');
 if(isa(MODE, "numeric"))
     if(MODE == -1)
@@ -14,8 +14,8 @@ if(isa(MODE, "numeric"))
         N = sym2poly(input('Inserisci N(s): '));
         D = sym2poly(input('Inserisci D(s): '));
     elseif(MODE == 2)
-        N = randi([0 5], 1, randi([1 3]));
-        D = randi([0 5], 1, randi([1 3]));
+        N = randi([-5 10], 1, randi([1 5]));
+        D = randi([-5 10], 1, randi([2 6]));
     else
         fprintf('Mode [%d] is not implemented.\n', MODE);
         return
@@ -76,7 +76,6 @@ title('Luogo delle radici');
 hold on;
 plot(Xs, 0, 'rdiamond');
 
-L = 100; % Lunghezza asintoti (arbitraria)
 alpha = -pi;
 theta = pi / abs(n_m);
 if(mod(n_m, 2) == 0)
@@ -90,8 +89,8 @@ end
 
 for i = 0:2 * abs(n_m)
     alpha = alpha + theta;
-    x1 = Xs + L * cos(alpha);
-    y1 = L * sin(alpha);
+    x1 = Xs + 10 * max(xlim) * cos(alpha);
+    y1 = 10 * max(ylim) * sin(alpha);
     if(isPos)
         plot([Xs x1], [0 y1], 'b--');
     else
@@ -109,11 +108,11 @@ hold off;
 
 % --- Stampa dei risultati ---
 fprintf('\n--- Guadagni ---\n');
-fprintf('K = %.2fdB = %.2f\n', mag2db(K), K);
+fprintf('K = %.2f = %.2fdB\n', K, mag2db(K));
 fprintf('Kp = %.2f\n', Kp);
 
 fprintf('\n--- Margini ---\n');
-fprintf('mg = %.2fdB = %.2f [@ %cc = %.2frad/s]\n', mag2db(Gm), Gm, 969, Wcg);
+fprintf('mg = %.2f = %.2fdB [@ %cc = %.2frad/s]\n', Gm, mag2db(Gm), 969, Wcg);
 fprintf('m%c = %.2f° [@ %ct = %.2frad/s]\n', 966, Pm, 969, Wcp);
 
 fprintf('\n--- Luogo delle Radici ---\n');
