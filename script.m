@@ -14,8 +14,8 @@ if(isa(MODE, "numeric"))
         N = sym2poly(input('Inserisci N(s): '));
         D = sym2poly(input('Inserisci D(s): '));
     elseif(MODE == 2)
-        N = randi([0 5], 1, randi([0 3]));
-        D = randi([0 5], 1, randi([0 3]));
+        N = randi([0 5], 1, randi([1 3]));
+        D = randi([0 5], 1, randi([1 3]));
     else
         fprintf('Mode [%d] is not implemented.\n', MODE);
         return
