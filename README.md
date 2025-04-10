@@ -29,9 +29,10 @@ Questo script MATLAB consente di analizzare un sistema lineare tempo-invariante 
 
 1. Esegui lo script in MATLAB.
 2. Alla richiesta iniziale, scegli il metodo di inserimento:
+   - `-1` → Visualizza un esempio dimostrativo con input precompilati
    - `0` → Inserisci i vettori dei coefficienti `[N]`, `[D]`
    - `1` → Inserisci le espressioni simboliche `N(s)` e `D(s)`
-   - `-1` → Visualizza un esempio dimostrativo con input precompilati
+   - `2` → Funzione di trasferimento random [WIP]
 
 3. Osserva i grafici generati e i risultati numerici stampati nella console.
 
