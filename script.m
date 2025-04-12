@@ -9,13 +9,19 @@ if(isa(MODE, "numeric"))
     elseif(MODE == 0)
         N = input('Inserisci i coefficienti del numeratore: ');
         D = input('Inserisci i coefficienti del denominatore: ');
+        G = tf(N, D);
     elseif(MODE == 1)
         syms s;
         N = sym2poly(input('Inserisci N(s): '));
         D = sym2poly(input('Inserisci D(s): '));
+        G = tf(N, D);
     elseif(MODE == 2)
-        N = randi([-5 10], 1, randi([1 5]));
-        D = randi([-5 10], 1, randi([2 6]));
+        m = input('Inserisci il numero di zeri desiderato: [0 - 10] \n');
+        Z = randi([-5 5], 1, m);
+        n = input('Inserisci il numero di poli desiderato: [0 - 10] \n');
+        P = randi([-5 5], 1, n);
+        G = zpk(Z, P, randi([-10 10]));
+        [N, D] = tfdata(tf(zpk(G)), 'v');
     else
         fprintf('Mode [%d] is not implemented.\n', MODE);
         return
@@ -24,7 +30,6 @@ else
     fprintf('Specified value is not an integer.\n');
     return
 end
-G = tf(N, D);
 display(G);
 
 % --- Calcolo di guadagni, zeri, poli, margini e molteplicita' ---
