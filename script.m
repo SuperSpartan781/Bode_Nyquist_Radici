@@ -113,7 +113,7 @@ hold off;
 
 % --- Stampa dei risultati ---
 fprintf('\n--- Guadagni ---\n');
-fprintf('K = %.2f = %.2fdB\n', K, mag2db(K));
+fprintf('K = %.2f = %.2fdB\n', K, mag2db(abs(K)));
 fprintf('Kp = %.2f\n', Kp);
 
 fprintf('\n--- Margini ---\n');
