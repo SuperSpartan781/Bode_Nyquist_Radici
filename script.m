@@ -81,8 +81,8 @@ title('Luogo delle radici');
 hold on;
 plot(Xs, 0, 'rdiamond');
 
-alpha = -pi;
-theta = pi / abs(n_m);
+alpha = -180;
+theta = 180 / abs(n_m);
 if(mod(n_m, 2) == 0)
     isPos = true;
 else
@@ -92,14 +92,16 @@ if(Kp < 0)
     isPos = ~isPos;
 end
 
-for i = 0:2 * abs(n_m)
+for i = 1:2 * abs(n_m) - 1
     alpha = alpha + theta;
-    x1 = Xs + 10 * max(xlim) * cos(alpha);
-    y1 = 10 * max(ylim) * sin(alpha);
-    if(isPos)
-        plot([Xs x1], [0 y1], 'b--');
-    else
-        plot([Xs x1], [0 y1], 'k--');
+    x1 = Xs + 10 * max(xlim) * cos(deg2rad(alpha));
+    y1 = 10 * max(ylim) * sin(deg2rad(alpha));
+    if(abs(alpha) ~= 180 && abs(alpha) ~= 0)
+        if(isPos)
+            plot([Xs x1], [0 y1], 'b--');
+        else
+            plot([Xs x1], [0 y1], 'k--');
+        end
     end
     isPos = ~isPos;
 end
